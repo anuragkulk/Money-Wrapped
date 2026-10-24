@@ -1,0 +1,6 @@
+{
+  "name": "FinCosmos Money Wrapped",
+  "description": "Student-focused financial awareness and Spotify Wrapped-style visual spending reports for college students.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
