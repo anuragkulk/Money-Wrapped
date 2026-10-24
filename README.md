@@ -1,8 +1,8 @@
-# FINCOSMOS — Money Wrapped
+# Money Wrapped
 
 **Understand your spending. Discover your habits. Make your money count.**
 
-FINCOSMOS — Money Wrapped is a student-focused personal finance insights tool that helps users understand where their money goes. By uploading a bank transaction statement, users can turn raw transaction data into a clear, visual, and engaging monthly spending report.
+Money Wrapped is a student-focused personal finance insights tool that helps users understand where their money goes. By uploading a bank transaction statement, users can turn raw transaction data into a clear, visual, and engaging monthly spending report.
 
 Inspired by the engaging, personalized experience of Spotify Wrapped, FINCOSMOS presents financial information in a simple and interactive format.
 
