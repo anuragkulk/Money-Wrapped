@@ -3,12 +3,21 @@ export type TransactionType = 'expense' | 'income' | 'transfer';
 export interface Transaction {
   id: string;
   date: string; // ISO YYYY-MM-DD
+  valueDate?: string; // ISO YYYY-MM-DD if available
   description: string;
   merchant: string;
   amount: number; // positive number in rupees (stored with precision)
+  debit?: number;
+  credit?: number;
+  balance?: number;
+  refNo?: string;
   type: TransactionType;
   category: string;
   excluded: boolean;
+  needsReview?: boolean;
+  validationIssues?: string[];
+  pageNumber?: number;
+  confidence?: number;
   notes?: string;
   raw?: Record<string, string>;
 }
@@ -88,12 +97,20 @@ export interface WrappedMetrics {
   };
 }
 
+export type StatementColumnMode = 'separate_debit_credit' | 'single_amount_type' | 'signed_amount';
+
 export interface ColumnMapping {
   date: string;
+  valueDate?: string;
   description: string;
-  amount: string;
+  refNo?: string;
+  amount?: string;
+  debit?: string;
+  credit?: string;
   type?: string;
+  balance?: string;
   category?: string;
+  columnMode: StatementColumnMode;
 }
 
 export interface RawParseResult {
@@ -103,4 +120,9 @@ export interface RawParseResult {
   validationErrors: string[];
   totalRows: number;
   duplicateRows: number;
+  headerLineIndex: number;
+  ignoredSummaryRows: number;
+  bankHint?: string;
+  pageCount?: number;
+  fileType?: 'csv' | 'pdf' | 'excel';
 }

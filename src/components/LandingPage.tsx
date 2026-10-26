@@ -218,7 +218,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               </div>
               <h3 className="text-base font-semibold text-slate-900">1. Import Transactions</h3>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Upload your monthly bank or UPI statement CSV. Auto-detection identifies dates, amounts, and descriptions.
+                Upload your monthly bank statement (PDF or CSV). Intelligent layout detection identifies dates, debit/credit columns, and descriptions.
               </p>
             </div>
 

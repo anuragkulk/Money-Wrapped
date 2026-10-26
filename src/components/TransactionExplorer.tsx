@@ -32,7 +32,7 @@ export const TransactionExplorer: React.FC<TransactionExplorerProps> = ({
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('ALL');
-  const [typeFilter, setTypeFilter] = useState<'ALL' | 'expense' | 'income' | 'transfer' | 'excluded'>('ALL');
+  const [typeFilter, setTypeFilter] = useState<'ALL' | 'expense' | 'income' | 'transfer' | 'excluded' | 'needsReview'>('ALL');
   const [sortField, setSortField] = useState<'date' | 'amount'>('date');
   const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>('desc');
 
@@ -57,7 +57,8 @@ export const TransactionExplorer: React.FC<TransactionExplorerProps> = ({
           const matchDesc = t.description.toLowerCase().includes(q);
           const matchMerchant = t.merchant.toLowerCase().includes(q);
           const matchCat = t.category.toLowerCase().includes(q);
-          if (!matchDesc && !matchMerchant && !matchCat) return false;
+          const matchRef = t.refNo ? t.refNo.toLowerCase().includes(q) : false;
+          if (!matchDesc && !matchMerchant && !matchCat && !matchRef) return false;
         }
 
         if (categoryFilter !== 'ALL' && t.category !== categoryFilter) {
@@ -66,6 +67,8 @@ export const TransactionExplorer: React.FC<TransactionExplorerProps> = ({
 
         if (typeFilter === 'excluded') {
           return t.excluded;
+        } else if (typeFilter === 'needsReview') {
+          return t.needsReview;
         } else if (typeFilter !== 'ALL') {
           return t.type === typeFilter;
         }
@@ -188,6 +191,7 @@ export const TransactionExplorer: React.FC<TransactionExplorerProps> = ({
             <option value="expense">Expenses Only</option>
             <option value="income">Incomes Only</option>
             <option value="transfer">Transfers</option>
+            <option value="needsReview">Needs Review / Flagged</option>
             <option value="excluded">Excluded Rows</option>
           </select>
         </div>
@@ -260,17 +264,39 @@ export const TransactionExplorer: React.FC<TransactionExplorerProps> = ({
                   <tr
                     key={tx.id}
                     className={`hover:bg-orange-50/40 transition-colors ${
-                      tx.excluded ? 'opacity-50 line-through' : ''
-                    }`}
+                      tx.needsReview ? 'bg-amber-50/40' : ''
+                    } ${tx.excluded ? 'opacity-50 line-through' : ''}`}
                   >
                     <td className="px-4 py-3 whitespace-nowrap text-slate-500 font-mono">
-                      {formatReadableDate(tx.date)}
+                      {tx.date ? (
+                        formatReadableDate(tx.date)
+                      ) : (
+                        <span className="text-rose-600 font-bold">No Date</span>
+                      )}
+                      {tx.valueDate && tx.valueDate !== tx.date && (
+                        <span className="block text-[10px] text-slate-400">
+                          Val: {formatReadableDate(tx.valueDate)}
+                        </span>
+                      )}
                     </td>
 
                     <td className="px-4 py-3 max-w-[260px]">
-                      <p className="font-semibold text-slate-900 truncate">{tx.description}</p>
-                      {tx.merchant !== tx.description && (
-                        <p className="text-[11px] text-slate-500 truncate">{tx.merchant}</p>
+                      <div className="flex items-center gap-1.5">
+                        <p className="font-semibold text-slate-900 truncate">{tx.merchant}</p>
+                        {tx.needsReview && (
+                          <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-200 shrink-0">
+                            Review
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-[11px] text-slate-500 truncate">{tx.description}</p>
+                      {tx.refNo && (
+                        <p className="text-[10px] font-mono text-slate-400 truncate">Ref: {tx.refNo}</p>
+                      )}
+                      {tx.validationIssues && tx.validationIssues.length > 0 && (
+                        <p className="text-[10px] text-amber-600 font-medium">
+                          {tx.validationIssues.join(', ')}
+                        </p>
                       )}
                     </td>
 
