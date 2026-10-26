@@ -4,9 +4,10 @@ import { downloadSampleCSVFile } from '../utils/csvParser';
 interface FooterProps {
   onClearData?: () => void;
   hasData?: boolean;
+  onNavigate?: (view: 'landing' | 'dashboard' | 'explorer' | 'privacy') => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onClearData, hasData }) => {
+export const Footer: React.FC<FooterProps> = ({ onClearData, hasData, onNavigate }) => {
   return (
     <footer className="border-t border-orange-100 bg-[#FFF9F3] text-slate-600 py-12 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
@@ -41,14 +42,20 @@ export const Footer: React.FC<FooterProps> = ({ onClearData, hasData }) => {
                 </button>
               </li>
               <li>
-                <a href="#privacy-section" className="hover:text-orange-600 transition-colors">
+                <button
+                  onClick={() => onNavigate?.('privacy')}
+                  className="hover:text-orange-600 transition-colors text-left"
+                >
                   Privacy & Data Security
-                </a>
+                </button>
               </li>
               <li>
-                <a href="#how-it-works" className="hover:text-orange-600 transition-colors">
+                <button
+                  onClick={() => onNavigate?.('landing')}
+                  className="hover:text-orange-600 transition-colors text-left"
+                >
                   How Wrapped Works
-                </a>
+                </button>
               </li>
             </ul>
           </div>

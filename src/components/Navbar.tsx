@@ -2,8 +2,8 @@ import React from 'react';
 import { Sparkles, UploadCloud } from 'lucide-react';
 
 interface NavbarProps {
-  currentView: 'landing' | 'dashboard' | 'explorer';
-  onNavigate: (view: 'landing' | 'dashboard' | 'explorer') => void;
+  currentView: 'landing' | 'dashboard' | 'explorer' | 'privacy';
+  onNavigate: (view: 'landing' | 'dashboard' | 'explorer' | 'privacy') => void;
   onOpenImport: () => void;
   onLaunchWrapped: () => void;
   hasData: boolean;
@@ -32,7 +32,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </span>
         </button>
 
-        {/* Zone 2: Single-line clean navigation links */}
+        {/* Zone 2: Single-line clean navigation links (Overview, Dashboard, Transactions, Privacy) */}
         <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-slate-600">
           <button
             onClick={() => onNavigate('landing')}
@@ -62,36 +62,14 @@ export const Navbar: React.FC<NavbarProps> = ({
               </button>
             </>
           )}
-          <a
-            href="#how-it-works"
-            onClick={(e) => {
-              if (currentView !== 'landing') {
-                e.preventDefault();
-                onNavigate('landing');
-                setTimeout(() => {
-                  document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
-                }, 100);
-              }
-            }}
-            className="hover:text-slate-900 transition-colors whitespace-nowrap shrink-0 text-slate-500"
-          >
-            How It Works
-          </a>
-          <a
-            href="#privacy-section"
-            onClick={(e) => {
-              if (currentView !== 'landing') {
-                e.preventDefault();
-                onNavigate('landing');
-                setTimeout(() => {
-                  document.getElementById('privacy-section')?.scrollIntoView({ behavior: 'smooth' });
-                }, 100);
-              }
-            }}
-            className="hover:text-slate-900 transition-colors whitespace-nowrap shrink-0 text-slate-500"
+          <button
+            onClick={() => onNavigate('privacy')}
+            className={`transition-colors whitespace-nowrap shrink-0 ${
+              currentView === 'privacy' ? 'text-orange-600 font-bold' : 'hover:text-slate-900'
+            }`}
           >
             Privacy
-          </a>
+          </button>
         </nav>
 
         {/* Zone 3: Primary action button */}

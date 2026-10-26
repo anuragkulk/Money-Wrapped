@@ -1,16 +1,11 @@
 import React from 'react';
 import {
-  ArrowRight,
-  ShieldCheck,
   Sparkles,
   UploadCloud,
   FileSpreadsheet,
   PieChart,
   Share2,
-  Lock,
-  EyeOff,
   Flame,
-  Award,
 } from 'lucide-react';
 import { formatINR } from '../utils/calculations';
 import { downloadSampleCSVFile } from '../utils/csvParser';
@@ -47,7 +42,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       {/* Hero Section */}
       <section className="relative mx-auto max-w-7xl px-4 pt-14 pb-20 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left Column: Value Prop */}
+          {/* Left Column: Top Headline & Import Actions */}
           <div className="lg:col-span-7 space-y-6">
             <div className="inline-flex items-center gap-2 text-xs font-mono font-medium text-orange-800 bg-orange-100/80 border border-orange-200 px-3 py-1 rounded-full">
               <span>FINCOSMOS · RNSIT STUDENT INITIATIVE</span>
@@ -56,33 +51,53 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.15] text-balance">
-              Your money has a story.{' '}
-              <span className="bg-gradient-to-r from-orange-600 via-amber-500 to-emerald-600 bg-clip-text text-transparent">
-                Let's uncover it.
+              Ready to decode your month?{' '}
+              <span className="block mt-1 bg-gradient-to-r from-orange-600 via-amber-500 to-emerald-600 bg-clip-text text-transparent">
+                Your money has a story.
               </span>
             </h1>
 
             <p className="text-base sm:text-lg text-slate-600 max-w-2xl leading-relaxed">
-              Turn your monthly UPI and bank transaction statements into a vibrant, Spotify Wrapped-inspired breakdown of your daily habits, canteen runs, and hidden spending rhythms.
+              Join hundreds of students uncovering their financial habits in a fun, judgment-free format.
             </p>
 
+            {/* Prominent Action Bar at the top so students upload first */}
             <div className="flex flex-wrap items-center gap-4 pt-2">
-              <button
-                onClick={hasData ? onLaunchWrapped : onStartImport}
-                className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 via-amber-500 to-emerald-500 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-orange-300/40 transition-all hover:brightness-105 active:scale-98 whitespace-nowrap"
-              >
-                <Sparkles className="h-4 w-4 text-white" />
-                <span>{hasData ? 'Open My Money Wrapped' : 'Generate My Wrapped'}</span>
-                <ArrowRight className="h-4 w-4" />
-              </button>
+              {hasData ? (
+                <>
+                  <button
+                    onClick={onLaunchWrapped}
+                    className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 via-amber-500 to-emerald-500 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-orange-300/40 transition-all hover:brightness-105 active:scale-98 whitespace-nowrap"
+                  >
+                    <Sparkles className="h-4 w-4 text-white" />
+                    <span>Open My Money Wrapped</span>
+                  </button>
+                  <button
+                    onClick={onStartImport}
+                    className="flex items-center gap-2 rounded-xl bg-white border border-orange-200 px-5 py-3.5 text-sm font-semibold text-slate-800 shadow-sm transition-colors hover:bg-orange-50 hover:border-orange-300 whitespace-nowrap"
+                  >
+                    <UploadCloud className="h-4 w-4 text-orange-600" />
+                    <span>Import Another Statement</span>
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={onStartImport}
+                    className="flex items-center gap-2 rounded-xl bg-orange-600 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-orange-300/40 transition-all hover:bg-orange-500 active:scale-98 whitespace-nowrap"
+                  >
+                    <UploadCloud className="h-4 w-4 text-white" />
+                    <span>Import My Transactions</span>
+                  </button>
 
-              <button
-                onClick={onLoadDemo}
-                className="flex items-center gap-2 rounded-xl bg-white border border-orange-200 px-5 py-3.5 text-sm font-semibold text-slate-800 shadow-sm transition-colors hover:bg-orange-50 hover:border-orange-300 whitespace-nowrap"
-              >
-                <span>Try Demo Data</span>
-                <span className="text-xs text-orange-600 font-mono font-normal">(1-Click)</span>
-              </button>
+                  <button
+                    onClick={onLoadDemo}
+                    className="flex items-center gap-2 rounded-xl bg-white border border-orange-200 px-5 py-3.5 text-sm font-semibold text-slate-800 shadow-sm transition-colors hover:bg-orange-50 hover:border-orange-300 whitespace-nowrap"
+                  >
+                    <span>Explore Demo Data</span>
+                  </button>
+                </>
+              )}
 
               <button
                 onClick={downloadSampleCSVFile}
@@ -236,80 +251,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 Generate high-resolution share cards for Instagram stories or WhatsApp, with built-in privacy masking.
               </p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Privacy Guarantee Section */}
-      <section id="privacy-section" className="py-20 px-4 sm:px-6 lg:px-8 border-t border-orange-100 bg-[#FFFDF9]">
-        <div className="mx-auto max-w-4xl rounded-3xl border border-emerald-200 bg-gradient-to-br from-emerald-50/90 via-teal-50/50 to-white p-8 sm:p-10 space-y-6 shadow-sm">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center">
-              <ShieldCheck className="h-6 w-6" />
-            </div>
-            <div>
-              <h3 className="text-xl font-bold text-slate-900">Privacy-First Architecture</h3>
-              <p className="text-xs text-emerald-700 font-mono font-medium">Your financial records never leave your browser.</p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-2">
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-slate-900 text-sm font-semibold">
-                <Lock className="h-4 w-4 text-emerald-600" />
-                <span>100% In-Browser</span>
-              </div>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                All CSV parsing, sorting, and calculations execute entirely in client-side JavaScript. No backend storage.
-              </p>
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-slate-900 text-sm font-semibold">
-                <EyeOff className="h-4 w-4 text-emerald-600" />
-                <span>No Bank Credentials</span>
-              </div>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                We never connect to net banking, request UPI PINs, or prompt for OTPs. You have complete control over what you import.
-              </p>
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-slate-900 text-sm font-semibold">
-                <Award className="h-4 w-4 text-emerald-600" />
-                <span>Instant Data Purge</span>
-              </div>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                A single click on "Clear My Data" removes any cached transactions from your local browser storage instantly.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Bottom CTA Banner */}
-      <section className="border-t border-orange-100 bg-gradient-to-b from-[#FFF5EC] to-[#FFFDF9] py-16 px-4 text-center">
-        <div className="mx-auto max-w-2xl space-y-4">
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
-            Ready to decode your month?
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-600">
-            Join hundreds of students uncovering their financial habits in a fun, judgment-free format.
-          </p>
-          <div className="pt-2 flex justify-center gap-4">
-            <button
-              onClick={onStartImport}
-              className="flex items-center gap-2 rounded-xl bg-orange-600 px-6 py-3 text-xs sm:text-sm font-semibold text-white shadow-md shadow-orange-300 hover:bg-orange-500 transition-all active:scale-95"
-            >
-              <UploadCloud className="h-4 w-4" />
-              <span>Import My Transactions</span>
-            </button>
-            <button
-              onClick={onLoadDemo}
-              className="rounded-xl border border-orange-200 bg-white px-5 py-3 text-xs sm:text-sm font-medium text-slate-700 hover:bg-orange-50 hover:text-slate-900 transition-colors shadow-sm"
-            >
-              Explore Demo Data
-            </button>
           </div>
         </div>
       </section>

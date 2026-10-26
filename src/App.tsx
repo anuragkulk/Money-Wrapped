@@ -5,6 +5,7 @@ import { LandingPage } from './components/LandingPage';
 import { DashboardView } from './components/DashboardView';
 import { WrappedStory } from './components/WrappedStory';
 import { TransactionExplorer } from './components/TransactionExplorer';
+import { PrivacyView } from './components/PrivacyView';
 import { ImportModal } from './components/ImportModal';
 import { ShareModal } from './components/ShareModal';
 import { Transaction } from './types';
@@ -30,7 +31,7 @@ export default function App() {
     return [];
   });
 
-  const [currentView, setCurrentView] = useState<'landing' | 'dashboard' | 'explorer'>('landing');
+  const [currentView, setCurrentView] = useState<'landing' | 'dashboard' | 'explorer' | 'privacy'>('landing');
   const [isImportOpen, setIsImportOpen] = useState(false);
   const [isWrappedOpen, setIsWrappedOpen] = useState(false);
   const [isShareOpen, setIsShareOpen] = useState(false);
@@ -180,12 +181,17 @@ export default function App() {
             onBackToDashboard={() => setCurrentView('dashboard')}
           />
         )}
+
+        {currentView === 'privacy' && (
+          <PrivacyView onBack={() => setCurrentView('landing')} />
+        )}
       </main>
 
       {/* Footer */}
       <Footer
         hasData={hasData}
         onClearData={() => setIsClearModalOpen(true)}
+        onNavigate={(view) => setCurrentView(view)}
       />
 
       {/* Import Modal */}
