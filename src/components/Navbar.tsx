@@ -36,7 +36,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-slate-600">
           <button
             onClick={() => onNavigate('landing')}
-            className={`transition-colors whitespace-nowrap shrink-0 ${
+            className={`transition-colors whitespace-nowrap shrink-0 h-[20px] ${
               currentView === 'landing' ? 'text-orange-600 font-bold' : 'hover:text-slate-900'
             }`}
           >
